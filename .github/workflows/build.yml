@@ -22,7 +22,10 @@ jobs:
           java-version: '17'
 
       - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
+        with:
+          accept-android-sdk-licenses: true
+          log-accepted-android-sdk-licenses: false
 
       - name: Build APK
         run: |
@@ -33,4 +36,10 @@ jobs:
             echo "Gradle project files are missing"
             exit 1
           fi
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: VISHU-AI-2.0-APK
+          path: app/build/outputs/apk/debug/*.apk
           
