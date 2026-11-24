@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#070b18">
+<title>VISHU AI</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% 20%,#182c55,#070b18 58%);color:#eef5ff;font-family:Arial,sans-serif;min-height:100vh}
+.wrap{max-width:520px;margin:auto;padding:24px 18px 30px;display:flex;flex-direction:column;min-height:100vh}
+header{display:flex;justify-content:space-between;align-items:center;color:#9cecff;letter-spacing:3px;font-weight:bold}
+.pill{font-size:11px;border:1px solid #285b7a;padding:7px 10px;border-radius:30px;letter-spacing:1px}
+.orb{width:180px;height:180px;border-radius:50%;margin:55px auto 22px;background:radial-gradient(circle at 35% 30%,#d9ffff,#48c9ff 18%,#1766b8 42%,#101a44 68%);box-shadow:0 0 35px #24baff,0 0 90px #1766b877;display:grid;place-items:center;position:relative}
+.orb:after{content:"";position:absolute;inset:-13px;border:1px solid #5ddcff88;border-radius:50%;box-shadow:0 0 25px #36caff55}
+.orb span{font-size:42px;color:#fff;text-shadow:0 0 15px #fff}
+h1{text-align:center;font-size:28px;letter-spacing:5px;margin:8px 0} .sub{text-align:center;color:#9ab4d6;font-size:13px}
+#chat{margin:26px 0 18px;flex:1;min-height:130px;max-height:34vh;overflow:auto}
+.msg{padding:13px 15px;border:1px solid #24496b;background:#0b1730cc;border-radius:14px;margin:9px 0;line-height:1.45;font-size:14px}
+.me{border-color:#267ca0;background:#10253c}
+.controls{display:flex;gap:10px}.mic{flex:1;border:0;border-radius:14px;padding:17px;color:#061222;background:linear-gradient(90deg,#7cecff,#3aa8ff);font-weight:bold;font-size:16px}
+.send{width:58px;border:1px solid #397aa0;border-radius:14px;background:#10233d;color:#eafaff;font-size:23px}
+input{width:100%;margin-bottom:10px;padding:15px;border-radius:12px;border:1px solid #28516d;background:#09162a;color:white;font-size:15px;outline:none}
+.note{text-align:center;color:#6f8aa9;font-size:11px;margin-top:14px;line-height:1.5}
+</style></head>
+<body><main class="wrap">
+<header><span>VISHU AI</span><span class="pill">PERSONAL ASSISTANT</span></header>
+<div class="orb"><span>✦</span></div>
+<h1>HELLO, VISHU</h1><div class="sub">I'm ready. Bolo, main sun rahi hoon.</div>
+<section id="chat"><div class="msg">Namaste! Main VISHU AI hoon. Mic dabao aur mujhse Hinglish mein baat karo. Abhi ye starter demo hai.</div></section>
+<input id="entry" placeholder="Yahan message type karo..." onkeydown="if(event.key==='Enter')sendText()">
+<div class="controls"><button class="mic" id="mic" onclick="listen()">🎙️ TALK TO VISHU</button><button class="send" onclick="sendText()">➤</button></div>
+<div class="note">Female voice device ke Text-to-Speech engine par depend karti hai.<br>Internet-based AI brain abhi connect nahi hai.</div>
+</main>
+<script>
+const chat=document.getElementById('chat');
+function add(text,cls='msg'){let d=document.createElement('div');d.className=cls;d.textContent=text;chat.appendChild(d);chat.scrollTop=chat.scrollHeight}
+function showReply(t){add(t)}
+function setListening(v){document.getElementById('mic').textContent=v?'👂 LISTENING...':'🎙️ TALK TO VISHU'}
+function replyFor(t){
+ let s=t.toLowerCase();
+ if(s.includes('hello')||s.includes('hi')||s.includes('namaste'))return 'Hello! Main VISHU AI hoon. Batao, aaj main tumhari kya help karun?';
+ if(s.includes('time')||s.includes('samay'))return 'Main abhi exact time access nahi kar rahi. Apne phone ke status bar mein time check kar sakte ho.';
+ if(s.includes('your name')||s.includes('naam'))return 'Mera naam VISHU AI hai. Main tumhari personal assistant hoon.';
+ if(s.includes('joke')||s.includes('chutkula'))return 'Teacher: Homework kahan hai? Student: Sir, Google Drive mein. Teacher: Link do! Student: Sir, internet nahi chal raha!';
+ return 'Maine tumhari baat sun li. Is starter version mein full AI brain connect nahi hai. Agle step mein secure AI connection add karenge.';
+}
+function process(t){if(!t.trim())return;add(t,'msg me');let r=replyFor(t);setTimeout(()=>{add(r);if(window.Android)Android.speak(r)},250)}
+function sendText(){let e=document.getElementById('entry');let t=e.value;e.value='';process(t)}
+function listen(){if(window.Android)Android.listen();else showReply('Voice feature Android app mein chalega.')}
+function onVoiceResult(t){process(t)}
+</script></body></html>
